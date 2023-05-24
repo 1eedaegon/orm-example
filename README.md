@@ -35,7 +35,7 @@ Write field to post&user on `schema` directory
 func (User) Fields() []ent.Field {
    return []ent.Field{
       field.String("name"),
-      field.String("email").
+      field.Text("email").
             Unique(),
       field.Time("created_at").
             Default(time.Now),
@@ -47,6 +47,119 @@ func (User) Edges() []ent.Edge {
    return []ent.Edge{
       edge.To("posts", Post.Type),
    }
+}
+```
+
+## 3. Generate code
+
+```bash
+go generate ./...
+```
+
+## 4. View schema
+
+```bash
+go run -mod=mod ariga.io/entviz ./ent/schema
+```
+
+## 5. Install atlas for migration
+
+```bash
+curl -sSf https://atlasgo.sh | sh
+```
+
+## 6. Generate migration scripts
+
+```bash
+atlas migrate diff add_users_posts \
+  --dir "file://ent/migrate/migrations" \
+  --to "ent://ent/schema" \
+  --dev-url "docker://mysql/8/ent"
+```
+
+## 7. Run develop database
+
+```bash
+docker run --rm --name entdb -d -p 3306:3306 -e MYSQL_DATABASE=ent -e MYSQL_ROOT_PASSWORD=pass mysql:8
+```
+
+## 8. Apply migrations
+
+```bash
+atlas migrate apply --dir file://ent/migrate/migrations \
+  --url mysql://root:pass@localhost:3306/ent
+```
+
+## 9. Seeding
+
+```bash
+go get -u github.com/go-sql-driver/mysql
+```
+
+```go
+package main
+
+import (
+    "context"
+    "flag"
+    "fmt"
+    "log"
+
+    "github.com/rotemtam/ent-blog-example/ent"
+
+    _ "github.com/go-sql-driver/mysql"
+    "github.com/rotemtam/ent-blog-example/ent/user"
+)
+
+func main() {
+    // Read the connection string to the database from a CLI flag.
+    var dsn string
+    flag.StringVar(&dsn, "dsn", "", "database DSN")
+    flag.Parse()
+
+    // Instantiate the Ent client.
+    client, err := ent.Open("mysql", dsn)
+    if err != nil {
+        log.Fatalf("failed connecting to mysql: %v", err)
+    }
+    defer client.Close()
+
+    ctx := context.Background()
+    // If we don't have any posts yet, seed the database.
+    if !client.Post.Query().ExistX(ctx) {
+        if err := seed(ctx, client); err != nil {
+            log.Fatalf("failed seeding the database: %v", err)
+        }
+    }
+    // ... Continue with server start.
+}
+
+func seed(ctx context.Context, client *ent.Client) error {
+    // Check if the user "rotemtam" already exists.
+    r, err := client.User.Query().
+        Where(
+            user.Name("rotemtam"),
+        ).
+        Only(ctx)
+    switch {
+    // If not, create the user.
+    case ent.IsNotFound(err):
+        r, err = client.User.Create().
+            SetName("rotemtam").
+            SetEmail("r@hello.world").
+            Save(ctx)
+        if err != nil {
+            return fmt.Errorf("failed creating user: %v", err)
+        }
+    case err != nil:
+        return fmt.Errorf("failed querying user: %v", err)
+    }
+    // Finally, create a "Hello, world" blogpost.
+    return client.Post.Create().
+        SetTitle("Hello, World!").
+        SetBody("This is my first post").
+        SetAuthor(r).
+        Exec(ctx)
 }
 ```
 
