@@ -167,6 +167,19 @@ func seed(ctx context.Context, client *ent.Client) error {
 go run main.go -dsn "root:pass@tcp(localhost:3306)/ent?parseTime=true"
 ```
 
+## 10. Run server
+
+```bash
+# dsn means mysql path
+go run main.go -dsn "root:pass@tcp(localhost:3306)/ent?parseTime=true"
+```
+
+## 11. integration test
+
+```bash
+go test ./... -v
+```
+
 ## Ref:
 
 - https://entgo.io/docs/getting-started/

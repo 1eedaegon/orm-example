@@ -37,6 +37,35 @@
             <p>{{ .Body }}</p>
             {{- end}}
           </div>
+          <div class="col-md-12">
+            <hr />
+            <h2>Create new post</h2>
+            <form action="/add" method="post">
+              <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  id="title"
+                  placeholder="Once upon a time..."
+                />
+              </div>
+              <div class="mb-3">
+                <label for="body" class="form-label">Body</label>
+                <textarea
+                  name="body"
+                  id="body"
+                  cols="30"
+                  rows="8"
+                  class="form-control"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-primary mb-3" type="submit">Post</button>
+              </div>
+            </form>
+          </div>
         </div>
       </main>
       <footer class="pt-5 my-5 text-muted border-top">

@@ -14,6 +14,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/1eedaegon/orm-example/ent"
+	"github.com/1eedaegon/orm-example/ent/post"
 	"github.com/1eedaegon/orm-example/ent/user"
 )
 
@@ -38,6 +39,7 @@ func (s *server) index(w http.ResponseWriter, r *http.Request) {
 	posts, err := s.client.Post.
 		Query().
 		WithAuthor().
+		Order(ent.Desc(post.FieldCreatedAt)).
 		All(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -49,6 +51,23 @@ func (s *server) index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (s *server) add(w http.ResponseWriter, r *http.Request) {
+	author, err := s.client.User.Query().Only(r.Context())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := s.client.Post.Create().
+		SetTitle(r.FormValue("title")).
+		SetBody(r.FormValue("body")).
+		SetAuthor(author).
+		Exec(r.Context()); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
 // Lightweight http router: chi v5
 // chi has two built-in middlewares: Logger, Recorverer
 func NewRouter(srv *server) chi.Router {
@@ -56,6 +75,7 @@ func NewRouter(srv *server) chi.Router {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Get("/", srv.index)
+	r.Post("/add", srv.add)
 	return r
 }
 
