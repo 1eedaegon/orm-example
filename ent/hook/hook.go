@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/rotemtam/ent-blog-example/ent"
+	"github.com/1eedaegon/orm-example/ent"
 )
 
 // The PostFunc type is an adapter to allow the use of ordinary

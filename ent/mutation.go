@@ -11,9 +11,9 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/rotemtam/ent-blog-example/ent/post"
-	"github.com/rotemtam/ent-blog-example/ent/predicate"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent/post"
+	"github.com/1eedaegon/orm-example/ent/predicate"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 const (

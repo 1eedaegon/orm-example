@@ -1,4 +1,4 @@
-module github.com/rotemtam/ent-blog-example
+module github.com/1eedaegon/orm-example
 
 go 1.19
 

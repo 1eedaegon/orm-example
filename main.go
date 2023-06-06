@@ -8,8 +8,8 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/rotemtam/ent-blog-example/ent"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 func main() {

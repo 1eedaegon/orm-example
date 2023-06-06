@@ -9,8 +9,8 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/rotemtam/ent-blog-example/ent/post"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent/post"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 // Post is the model entity for the Post schema.

@@ -12,8 +12,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/rotemtam/ent-blog-example/ent/post"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent/post"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.

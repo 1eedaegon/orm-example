@@ -11,9 +11,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/rotemtam/ent-blog-example/ent/post"
-	"github.com/rotemtam/ent-blog-example/ent/predicate"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent/post"
+	"github.com/1eedaegon/orm-example/ent/predicate"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 // UserUpdate is the builder for updating User entities.
@@ -44,6 +44,14 @@ func (uu *UserUpdate) SetName(s string) *UserUpdate {
 // SetCreatedAt sets the "created_at" field.
 func (uu *UserUpdate) SetCreatedAt(t time.Time) *UserUpdate {
 	uu.mutation.SetCreatedAt(t)
+	return uu
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableCreatedAt(t *time.Time) *UserUpdate {
+	if t != nil {
+		uu.SetCreatedAt(*t)
+	}
 	return uu
 }
 
@@ -226,6 +234,14 @@ func (uuo *UserUpdateOne) SetName(s string) *UserUpdateOne {
 // SetCreatedAt sets the "created_at" field.
 func (uuo *UserUpdateOne) SetCreatedAt(t time.Time) *UserUpdateOne {
 	uuo.mutation.SetCreatedAt(t)
+	return uuo
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableCreatedAt(t *time.Time) *UserUpdateOne {
+	if t != nil {
+		uuo.SetCreatedAt(*t)
+	}
 	return uuo
 }
 

@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/rotemtam/ent-blog-example/ent/post"
-	"github.com/rotemtam/ent-blog-example/ent/user"
+	"github.com/1eedaegon/orm-example/ent/post"
+	"github.com/1eedaegon/orm-example/ent/user"
 )
 
 // PostCreate is the builder for creating a Post entity.

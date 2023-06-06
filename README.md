@@ -163,6 +163,10 @@ func seed(ctx context.Context, client *ent.Client) error {
 }
 ```
 
+```bash
+go run main.go -dsn "root:pass@tcp(localhost:3306)/ent?parseTime=true"
+```
+
 ## Ref:
 
 - https://entgo.io/docs/getting-started/

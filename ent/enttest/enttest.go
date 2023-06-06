@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/rotemtam/ent-blog-example/ent"
+	"github.com/1eedaegon/orm-example/ent"
 	// required by schema hooks.
-	_ "github.com/rotemtam/ent-blog-example/ent/runtime"
+	_ "github.com/1eedaegon/orm-example/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/rotemtam/ent-blog-example/ent/migrate"
+	"github.com/1eedaegon/orm-example/ent/migrate"
 )
 
 type (
